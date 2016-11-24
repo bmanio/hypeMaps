@@ -54,7 +54,7 @@ function init() {
 		'language' => get_current_language(),
 		'output' => 'svembed',
 	));
-	elgg_register_js('google.maps', $gmaps_lib);
+	elgg_register_js('google.maps', elgg_normalize_url($gmaps_lib));
 
 	elgg_register_simplecache_view('css/framework/maps/stylesheet');
 	elgg_register_css('maps', elgg_get_simplecache_url('css', 'framework/maps/stylesheet'));
@@ -66,7 +66,7 @@ function init() {
 		$path = '';
 	}
 
-	elgg_register_js('jquery.sticky-kit', $path . '/vendor/bower-asset/sticky-kit/jquery.sticky-kit.min.js', 'footer', 500);
+	//elgg_register_js('jquery.sticky-kit', $path . '/vendor/bower-asset/sticky-kit/dist/sticky-kit.min.js', 'footer', 500);
 
 	elgg_register_simplecache_view('js/framework/maps/mapbox');
 	elgg_register_js('maps.mapbox', elgg_get_simplecache_url('js', 'framework/maps/mapbox'), 'footer', 550);

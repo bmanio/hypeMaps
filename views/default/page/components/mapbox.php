@@ -19,9 +19,10 @@ namespace hypeJunction\Maps;
 
 elgg_load_css('maps');
 
-elgg_load_js('jquery.sticky-kit');
+//elgg_load_js('jquery.sticky-kit');
 elgg_load_js('jquery.form');
 elgg_load_js('google.maps');
+elgg_load_js('maps.mapbox');
 elgg_load_js('maps.mapbox');
 
 elgg_push_context('mapbox');
