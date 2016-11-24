@@ -48,7 +48,7 @@ function init() {
 	 * JS and CSS
 	 */
 	$libs = array_filter(elgg_get_config('google_maps_libraries'));
-	$gmaps_lib = elgg_http_add_url_query_elements('//maps.googleapis.com/maps/api/js', array(
+	$gmaps_lib = elgg_http_add_url_query_elements('https://maps.googleapis.com/maps/api/js', array(
 		'key' => elgg_get_plugin_setting('google_api_key', PLUGIN_ID),
 		'libraries' => implode(',', $libs),
 		'language' => get_current_language(),
