@@ -13,7 +13,9 @@ function page_handler($page, $handler) {
 
 	elgg_push_breadcrumb(elgg_echo('maps'), 'maps');
 
-	switch ($page[0]) {
+    $context = elgg_extract(0, $page, 'all');
+
+    switch ($context) {
 
 		default :
 		case 'search' :

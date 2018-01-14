@@ -28,8 +28,12 @@ require_once __DIR__ . '/lib/page_handlers.php';
 
 elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
 elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init_groups');
-elgg_register_event_handler('pagesetup', 'system', __NAMESPACE__ . '\\pagesetup');
-elgg_register_event_handler('pagesetup', 'system', __NAMESPACE__ . '\\pagesetup_groups');
+
+//
+//elgg_register_plugin_hook_handler('register', 'menu:title', __NAMESPACE__ . '\\titlemenu');
+//elgg_register_plugin_hook_handler('register', 'menu:title', __NAMESPACE__ . '\\titlemenu_groups');
+//elgg_register_event_handler('pagesetup', 'system', __NAMESPACE__ . '\\pagesetup');
+//elgg_register_event_handler('pagesetup', 'system', __NAMESPACE__ . '\\pagesetup_groups');
 
 function init() {
 
@@ -91,6 +95,45 @@ function init() {
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', __NAMESPACE__ . '\\get_marker_url', 600);
 
 	elgg_register_widget_type('staticmap', elgg_echo('maps:widget:staticmap'), elgg_echo('maps:widget:staticmap:desc'), array('all'), true);
+
+/**
+ * Setup menus
+ */
+
+$item = ElggMenuItem::factory([
+    'name' => 'maps',
+    'text' => elgg_echo('maps'),
+    'priority' => 100,
+    'href' => 'maps',
+    'data' => [
+        'view' => 'embed/file_upload/content',
+    ],
+]);
+elgg_register_menu_item('embed', $item);
+
+
+/**
+ * Setup group menus
+ */
+$page_owner = elgg_get_page_owner_entity();
+if (elgg_instanceof($page_owner, 'group')) {
+    $group_maps = get_group_search_maps($page_owner);
+    if (is_array($group_maps)) {
+        foreach ($group_maps as $id => $gm) {
+            $groupoption = "maps_{$id}_enable";
+            if ($page_owner->$groupoption != 'no') {
+                $item = ElggMenuItem::factory([
+                    'name' => 'maps:$id',
+                    'text' => elgg_extract('title', $gm),
+                    'priority' => 100,
+                    'href' => 'maps/group/{$page_owner->guid}/{$id}',
+                ]);
+                elgg_register_menu_item('embed', $item);
+            }
+        }
+    }
+}
+
 }
 
 function init_groups() {
