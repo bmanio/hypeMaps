@@ -96,44 +96,15 @@ function init() {
 
 	elgg_register_widget_type('staticmap', elgg_echo('maps:widget:staticmap'), elgg_echo('maps:widget:staticmap:desc'), array('all'), true);
 
-/**
- * Setup menus
- */
+	elgg_register_menu_item('embed', $item);
 
-$item = ElggMenuItem::factory([
+// Add a new menu item to the site main menu
+elgg_register_menu_item('site', array(
     'name' => 'maps',
     'text' => elgg_echo('maps'),
     'priority' => 100,
     'href' => 'maps',
-    'data' => [
-        'view' => 'embed/file_upload/content',
-    ],
-]);
-elgg_register_menu_item('embed', $item);
-
-
-/**
- * Setup group menus
- */
-$page_owner = elgg_get_page_owner_entity();
-if (elgg_instanceof($page_owner, 'group')) {
-    $group_maps = get_group_search_maps($page_owner);
-    if (is_array($group_maps)) {
-        foreach ($group_maps as $id => $gm) {
-            $groupoption = "maps_{$id}_enable";
-            if ($page_owner->$groupoption != 'no') {
-                $item = ElggMenuItem::factory([
-                    'name' => 'maps:$id',
-                    'text' => elgg_extract('title', $gm),
-                    'priority' => 100,
-                    'href' => 'maps/group/{$page_owner->guid}/{$id}',
-                ]);
-                elgg_register_menu_item('embed', $item);
-            }
-        }
-    }
-}
-
+));
 }
 
 function init_groups() {
