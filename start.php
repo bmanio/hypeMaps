@@ -96,7 +96,6 @@ function init() {
 
 	elgg_register_widget_type('staticmap', elgg_echo('maps:widget:staticmap'), elgg_echo('maps:widget:staticmap:desc'), array('all'), true);
 
-	elgg_register_menu_item('embed', $item);
 
 // Add a new menu item to the site main menu
 elgg_register_menu_item('site', array(
